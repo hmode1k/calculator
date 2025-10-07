@@ -68,8 +68,18 @@ function multiply(num1, num2) {
 }
 
 function divide(num1, num2) {
-    let sum = num1 / num2;
-    return sum;
+    if (num2 == 0) {
+        console.log(num2);
+        number1 = '';
+        number2 = '';
+        operator = '';
+        alert('cannot devide by zero');
+        return;
+    }
+    else {
+        let sum = num1 / num2;
+        return sum;
+    }
 }
 
 function operate(operator, num1, num2) {
@@ -81,7 +91,12 @@ function operate(operator, num1, num2) {
         case '*':
             return multiply(num1, num2);
         case '/':
-            return divide(num1, num2);
+            if (divide(num1, num2) === undefined) {
+                return;
+            }
+            else {
+                return divide(num1, num2);
+            }
     }
 }
 
@@ -100,30 +115,44 @@ function bufferNumber(num) {
 }
 
 function selectOperator(op) {
-    if (operator === '') {
-        operator = op;
-        display.innerHTML = number1 + ' ' + operator;
+    if (number1 !== '') {
+        if (operator === '') {
+            operator = op;
+            display.innerHTML = number1 + ' ' + operator;
+        }
+        else {
+            let res = operate(operator, parseFloat(number1), parseFloat(number2));
+            if (res !== undefined) {
+                operator = op;
+                number1 = res;
+                number2 = '';
+                display.innerHTML = number1 + ' ' + operator;
+            }
+            else {
+                display.innerHTML = '';
+            }
+        }
     }
-    else {
-        let res = operate(operator, parseFloat(number1), parseFloat(number2));
-        operator = op;
-        number1 = res;
-        number2 = '';
-        display.innerHTML = number1 + ' ' + operator;
-    }
+
 }
 
 
 equalBtn.addEventListener('click', () => {
-    if (operator === '') {
+    if (operator === '' || number2 === '' || number1 === '') {
         return;
     }
     else {
         let res = operate(operator, parseFloat(number1), parseFloat(number2));
-        number1 = res;
-        display.innerHTML = number1;
-        operator = '';
-        number2 = '';
+        
+        if (res !== undefined) {
+            number1 = res;
+            display.innerHTML = number1;
+            operator = '';
+            number2 = '';
+        }
+        else {
+            display.innerHTML = '';
+        }
     }
 })
 
