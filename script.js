@@ -6,23 +6,25 @@ let clearBtn = document.querySelector('#clear-btn');
 let equalBtn = document.querySelector('#equal-btn');
 let delBtn = document.querySelector('#delete-btn');
 let dotBtn = document.querySelector('#dot-btn');
-let dotBool = false;
+
 
 let number1 = '';
 let number2 = '';
 let operator = '';
 
 dotBtn.addEventListener('click', () => {
-    if (!dotBool) {
-        if (number1 !== '' && operator === '') {
+
+    if (display.innerHTML !== '') {
+        if (number1 !== '' && operator === '' && !number1.includes('.')) {
             number1 = number1 + '.';
             display.innerHTML = number1;
         }
-        else {
+        else if (!number2.includes('.') && number2 !== '') {
             number2 = number2 + '.';
             display.innerHTML = number1 + ' ' + operator + ' ' + number2;
         }
     }
+
 })
 
 
